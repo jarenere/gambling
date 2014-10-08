@@ -1,0 +1,96 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Bets - {{ nickname }}{% endblock %}
+
+
+{% block content %}
+    {% include 'flash.html' %}
+    <form class="form form-horizontal" method="post" role="form">
+      {{ form.hidden_tag() }}
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  Sin apostar
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+                {% for l in lista_id %}
+                    {% set i_comment= "comment"'%s' % l %}
+                    {% if form[i_comment].data == "" %}
+                        {{wtf.form_field(form[i_comment])}}
+                        {% if not loop.last%}
+                            <hr />
+                        {% endif %}
+                    {% endif %}
+
+                    {#
+                    {% set answared= "answared"'%s' % l %}
+                    {% if not form[answared].data%}
+                        {% set i_yesno= "yesno"'%s' % l %}
+                        {% set i_comment= "comment"'%s' % l %}
+                        {{form[i_yesno].label}}
+                        {{wtf.form_field(form[i_yesno])}}
+                        {{wtf.form_field(form[i_comment])}}
+                        {% if not loop.last%}
+                            <hr />
+                        {% endif %}
+                    {% endif %}
+                    #}
+                 {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    Apostado
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body">
+                {% for l in lista_id %}
+                    {% set i_comment= "comment"'%s' % l %}
+                    {% if form[i_comment].data != "" %}
+                      {{wtf.form_field(form[i_comment])}}
+                    {% endif %}
+                    {#}
+                    {% set answared= "answared"'%s' % l %}
+                    {% if form[answared].data%}
+                        {% set i_yesno= "yesno"'%s' % l %}
+                        {% set i_comment= "comment"'%s' % l %}
+                        {{form[i_yesno].label}}
+                        {{wtf.form_field(form[i_yesno])}}
+                        {{wtf.form_field(form[i_comment])}}
+                        {% if not loop.last%}
+                            <hr />
+                        {% endif %}
+                    {% endif %}
+                    #}
+                 {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="navbar navbar-default navbar-fixed-bottom navbar-center" role="navigation">
+            <div class="controls">
+                {{wtf.form_field(form.submit)}}
+            </div>
+        </nav>
+    </form>
+
+
+
+
+
+    
+
+
+{% endblock %}

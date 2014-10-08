@@ -1,0 +1,4 @@
+flask/*
+varios/*
+config.py
+*.pyc

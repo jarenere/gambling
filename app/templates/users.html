@@ -1,0 +1,20 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Bets - {{ nickname }}{% endblock %}
+
+{% block content %}
+    {% include 'flash.html' %}
+    <ul>
+        <li><a href="{{url_for('user', nickname = "arevalo")}}">arevalo</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "dani")}}">dani</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "chob")}}">chob</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "chueca")}}">chueca</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "edu")}}">edu</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "richi")}}">richi</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "julio")}}">julio</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "borja")}}">borja</a><br /></li>
+        <li><a href="{{url_for('user', nickname = "javi")}}">javi</a><br /></li>
+    <ul>
+
+{% endblock %}
