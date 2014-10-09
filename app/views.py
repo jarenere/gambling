@@ -47,7 +47,7 @@ def user(nickname):
         update_excel(form,dic,lista_id,nickname)
         return redirect(url_for('user', nickname = nickname))
     return render_template('user.html',
-        nickname =  "nickname",
+        nickname =  nickname,
         form = form,
         lista_id = lista_id)
 
