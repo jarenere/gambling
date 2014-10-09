@@ -1,0 +1,16 @@
+[Unit]
+#copy file in /usr/lib/systemd/system/
+Description = Starts an instance of gambling
+After = remote-fs.target
+
+[Service]
+User = gambling
+Group = users
+WorkingDirectory = /home/gambling/gambling/
+Type = forking
+ExecStart = /bin/bash server.sh start
+Restart = on-failure
+KillMode=process
+
+[Install]
+WantedBy = multi-user.target
