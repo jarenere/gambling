@@ -8,9 +8,10 @@ User = gambling
 Group = users
 WorkingDirectory = /home/gambling/gambling/
 Type = forking
-ExecStart = /bin/bash server.sh start
+ExecStart = /usr/bin/bash server.sh start
 Restart = on-failure
 KillMode=process
-
+ExecStop = /usr/bin/bash server.sh stop
 [Install]
 WantedBy = multi-user.target
+

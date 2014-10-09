@@ -1,16 +1,13 @@
 #!/bin/bash
 
-PID=""
-
 function get_pid {
    PID=`pgrep gunicorn`
 }
 
-function stop {
+stop() {
    get_pid
    if [ -z $PID ]; then
       echo "server is not running."
-      exit 1
    else
       echo -n "Stopping server.."
       kill -9 $PID
@@ -20,16 +17,19 @@ function stop {
 }
 
 
-function start {
+start() {
    get_pid
    if [ -z $PID ]; then
       echo  "Starting server.."
-      source flask/bin/deactivate
-      gunicorn -b 0.0.0.0:5678 app:app
-      ./udpthread.py &
+      source flask/bin/activate
+      gunicorn -b 0.0.0.0:5678 app:app &
       get_pid
       echo "Done. PID=$PID"
+      deactivate
    else
       echo "server is already running, PID=$PID"
    fi
 }
+
+# call arguments verbatim:
+$@
