@@ -1,7 +1,7 @@
 from app import app
 from forms import generateFormBet
-from flask import render_template, redirect, url_for
-from decorators import valid_user
+from flask import render_template, redirect, url_for, flash
+from decorators import valid_user, async
 
 import gdata.spreadsheet.service
 import gdata.service
@@ -45,13 +45,20 @@ def user(nickname):
     form = generateFormBet(dic,lista_id,nickname)
     if form.validate_on_submit():
         update_excel(form,dic,lista_id,nickname)
-        return redirect(url_for('user', nickname = nickname))
+        # return redirect(url_for('user', nickname = nickname))
     return render_template('user.html',
         nickname =  nickname,
         form = form,
         lista_id = lista_id)
 
 def update_excel(form,dic,lista_id,nickname):
+    @async    
+    def _updateCell(x,y,data,key,row_id):
+    # updateCell is very slow
+        print x, "vamos"
+        spr_client.UpdateCell(x,y,data,key,row_id)
+
+
     spr_client = gdata.spreadsheet.service.SpreadsheetsService()
     spr_client.email = email
     spr_client.password = password
@@ -61,7 +68,10 @@ def update_excel(form,dic,lista_id,nickname):
         if form["comment"+str(i)].data not in [None, ""]:
             if form["comment"+str(i)].data != dic.get((nickname,i)):
                 #actualizar con el texto si es diferente a lo que habia antes
-                spr_client.UpdateCell(i,NAME_COL[nickname], form["comment"+str(i)].data,key,row_id)
+                # spr_client.UpdateCell(i,NAME_COL[nickname], form["comment"+str(i)].data,key,row_id)
+                _updateCell(i,NAME_COL[nickname], form["comment"+str(i)].data,key,row_id)
+    flash('Actualizando datos en el excel, esto puede llevar su tiempo')
+ 
 
 
 
